@@ -15,11 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, re_path
-from todo.views import TasksViewSet
+from todo.views import TasksViewSet, TasksDetailViewSet, TaskCompleteViewSet, Logout
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/todo', TasksViewSet.as_view({'get': 'select'})),
-    re_path(r'^api/todo/(?P<task_id>\w+)/$', TasksViewSet.as_view({'get': 'detail'})),
+    path('api/todo/', TasksViewSet.as_view()),
+    path('logout', Logout.as_view()),
+    re_path(r'^api/todo/(?P<pk>\d+)/$', TasksDetailViewSet.as_view()),
+    re_path(r'^api/todo/(?P<pk>\d+)/execute/$', TaskCompleteViewSet.as_view()),
 ]
 
